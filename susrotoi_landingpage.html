@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Susrotoi</title>
+    <style>
+        /* Import Nunito and PT Sans fonts from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=PT+Sans:wght@400&display=swap');
+
+        /* General body styling */
+        body {
+            font-family: 'PT Sans', sans-serif; /* Default font for all text */
+            font-weight: 400;
+            font-size: 19px;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            display: flex; /* Enable flexbox for the body */
+            flex-direction: column; /* Arrange content in a column */
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+        }
+
+        /* Style section headings (h2) */
+        h2 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600; /* Assuming you want headings to be bold */
+            font-size: 45px;
+            margin-top: 1.5em; /* Adjust top margin for spacing between sections */
+            margin-bottom: 0.5em; /* Adjust bottom margin for spacing below headings */
+            line-height: 1.3;
+        }
+
+        /* Style other headings (h1, h3) */
+        h1, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 23px;
+            margin-top: 1em;
+            margin-bottom: 0.3em;
+            line-height: 1.3;
+        }
+
+        /* Adjust heading margins for specific sections if needed */
+        .welcome-section h1 {
+            margin-top: 0; /* Remove top margin for the main welcome heading */
+            font-size: 45px; /* Make the main welcome heading 45px */
+        }
+
+        .box h3,
+        .why-choose-us-point h3,
+        .get-started-section .offer-details div h3,
+        .delivery-across-ghana-section .delivery-point h3 {
+            font-size: 23px; /* Ensure all h3 are 23px */
+            margin-bottom: 0.2em; /* Adjust bottom margin for h3 */
+        }
+
+        /* Fixed base background image */
+        .base-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("susrotoi_bg.avif"); /* Replace with your background image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2; /* Place behind the content overlay */
+        }
+
+        /* Content wrapper with reduced background opacity */
+        .content-overlay {
+            position: relative;
+            padding: 0;
+            color: black;
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 0; /* Changed z-index */
+            flex-grow: 1; /* Allow the content to grow and push the footer down */
+        }
+
+         /* Logo styling */
+        .logo {
+            text-align: left;
+            margin-bottom: 15px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 20px;
+        }
+
+        .logo img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        /* Combined Welcome and HP/Canon section */
+        .intro-products-container {
+            background-color: rgba(0, 0, 46, 0.75);
+            padding: 10px 200px 200px 200px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text {
+            flex: 1.8;
+            padding: 50px;
+            padding-right: 80px;
+            text-align: left;
+            color: white;
+            font-size: 19px; /* Ensure text within welcome-text is 19px */
+        }
+
+        .welcome-image {
+            flex: 1.2;
+            text-align: right;
+        }
+
+        .welcome-image img,
+        .hp-canon-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        /* HP & Canon Section */
+        .hp-canon-section {
+            display: flex;
+            align-items: center; /* Align items to the center */
+            gap: 60px; /* Spacing between image and text/boxes */
+            padding-top: 20px; /* Add some top spacing between the sections */
+        }
+
+        .hp-canon-image {
+            flex-basis: 40%; /* Image takes about 40% width */
+        }
+
+        .hp-canon-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        .hp-canon-text-and-boxes {
+            flex-basis: 60%; /* Text and boxes take about 60% width */
+        }
+
+        .hp-canon-text-and-boxes h2 {
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .boxes-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow boxes to wrap to the next line */
+            gap: 15px; /* Spacing between the boxes */
+        }
+
+        .box {
+            background-color: rgba(0, 0, 46, 1); /* Same dark blue, no transparency */
+            color: white;
+            padding: 15px;
+            border-radius: 20px;
+            flex-basis: calc(50% - 7.5px); /* Two boxes side by side with spacing */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            font-size: 19px; /* Ensure text within box is 19px */
+        }
+
+        .box:last-child {
+            flex-basis: 100%; /* Last box takes full width */
+        }
+
+        .box.outline-yellow {
+            border: 2px solid yellow;
+        }
+
+        .box.outline-red {
+            border: 2px solid red;
+        }
+
+        .box.outline-orange {
+            border: 2px solid orange;
+        }
+
+        /* Why Choose Us section */
+        .why-choose-us-section {
+            display: flex;
+            align-items: flex-start; /* Align text and image to the top */
+            padding: 40px 200px 40px 200px; /* Reduced top padding to 10px */
+            background-color: #f0f0f0; /* Slightly dark shade of ash/gray */
+        }
+
+        .why-choose-us-text {
+            flex-basis: 65%; /* Text occupies about 2/3 */
+            padding: 0px; /* Added padding to the why-choose-us-text container */
+            padding-right: 20px; /* Space between text and image */
+            font-size: 19px; /* Ensure text within why-choose-us-text is 19px */
+        }
+
+        .why-choose-us-text h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .why-choose-us-point {
+            margin-bottom : 20px; /* Space between points */
+        }
+
+        .why-choose-us-point h3 {
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .why-choose-us-point p {
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            padding-top: 0px; /* Reset default padding */
+            align-items: center;
+            margin-left: 15px;
+        }
+
+        .icon-circle {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px; /* Adjust size as needed */
+            height: 40px; /* Adjust size as needed */
+            border-radius: 50%;
+            background-color: rgba(0, 0, 46); /* Maintained black background */
+            margin-right: 10px;
+            border: 2px solid; /* Added border for the outline */
+        }
+
+        .icon-circle.outline-yellow {
+            border-color: yellow;
+        }
+
+        .icon-circle.outline-red {
+            border-color: red;
+        }
+
+        .icon-circle.outline-orange {
+            border-color: orange;
+        }
+
+        .icon-circle img { /* Style for the PNG icons inside the circle */
+            width: 20px; /* Adjusted icon size within the circle */
+            height: 20px; /* Adjusted icon size within the circle */
+        }
+
+        .why-choose-us-point > p { /* Target the description paragraph directly within the point div */
+            padding-left: 50px; /* Indent to align with the main point (icon width + margin) */
+            font-size: 19px; /* Ensure paragraph text is 19px */
+        }
+
+        .why-choose-us-image {
+            flex-basis: 35%; /* Image occupies about 1/3 */
+            text-align: right;
+        }
+
+        .why-choose-us-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Delivery Across Ghana Section (Updated with Background and Overlay) */
+        .delivery-across-ghana-section {
+            background-image: url("delivery_background.png"); /* Replace with your delivery background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Default text color for this section */
+            position: relative; /* For overlay positioning */
+        }
+
+        .delivery-across-ghana-section .delivery-overlay {
+            background-color: rgba(0, 0, 46, 0.75); /* Same dark blue as welcome, with transparency */
+            padding:100px 200px 200px 200px; /* Padding for the content within the overlay */
+            align-items: center;
+        }
+
+        .delivery-across-ghana-section .section-heading {
+            text-align: left;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .delivery-across-ghana-section .delivery-points-container {
+            display: flex;
+            justify-content: space-around; /* Distribute points horizontally */
+            align-items: flex-start; /* Align items to the top initially */
+        }
+
+        .delivery-across-ghana-section .delivery-point {
+            display: flex;
+            flex-direction: column; /* Arrange bar and text vertically within each point */
+            align-items: flex-start; /* Left align the content */
+            text-align: left;
+            flex-basis: 30%; /* Approximately equal width for each point */
+            padding-top: 0; /* Reset default padding-top */
+            font-size: 19px; /* Ensure text within delivery-point is 19px */
+        }
+
+        .delivery-across-ghana-section .colored-bar {
+            width: 100%; /* Bar takes the full width of the "box" */
+            height: 20px; /* Adjust height as needed */
+            border-radius: 10px; /* Increased border radius */
+            background-color: rgba(0, 0, 46, 0.9); /* Solid background color from welcome section */
+            margin-bottom: 10px; /* Space between bar and heading */
+        }
+
+        .delivery-across-ghana-section .colored-bar.outline-yellow {
+            outline: 2px solid yellow;
+            outline-offset: -2px;
+        }
+
+        .delivery-across-ghana-section .colored-bar.outline-red {
+            outline: 2px solid red;
+            outline-offset: -2px;
+        }
+
+        .delivery-across-ghana-section .colored-bar.outline-orange {
+            outline: 2px solid orange;
+            outline-offset: -2px;
+        }
+
+        .delivery-across-ghana-section .delivery-point h3 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-size: 23px; /* Ensure h3 is 23px */
+        }
+
+        /* Adjust top padding for the staggered effect */
+        .delivery-across-ghana-section .point-one {
+            padding-top: 50px; /* Adjust value to lower the first point */
+        }
+
+        .delivery-across-ghana-section .point-one p {
+            margin-top: 5px; /* Adjust value to lower the first point */
+        }
+
+        .delivery-across-ghana-section .point-two {
+            padding-top: 25px; /* Adjust value to raise the second point slightly */
+        }
+
+        .delivery-across-ghana-section .point-two p {
+            margin-top: 5px; /* Adjust value to lower the first point */
+        }
+
+        .delivery-across-ghana-section .point-three {
+            padding-top: 0; /* Default alignment for the third point */
+        }
+        .delivery-across-ghana-section .point-three p {
+            margin-top: 5px; /* Adjust value to lower the first point */
+        }
+
+        /* Get Started Today section (Updated) */
+        .get-started-section {
+            background-color: rgba(0, 0, 46, 0.75); /* Same dark blue as delivery overlay */
+            padding: 10px 200px 10px 200px; /* Adjust padding to match delivery overlay */
+            margin-bottom:0;
+            color: white; /* Set text color to white for dark background */
+        }
+
+        .get-started-section h2 {
+            text-align: left; /* Left align the headline */
+            margin-bottom: 20px; /* Increase margin below headline */
+        }
+
+        .get-started-section .offer-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px; /* Increase top margin for the details */
+            gap: 20px; /* Add gap between the offer details */
+        }
+
+        .get-started-section .offer-details div {
+            padding: 20px;
+            border-radius: 10px; /* Add border radius to the offer details boxes */
+            flex: 1;
+            margin: 0; /* Remove default margins for the flex items */
+            text-align: left;
+            box-sizing: border-box; /* Ensure padding is within the width */
+            border: none; /* Remove any default borders */
+            font-size: 19px; /* Ensure text within offer-details div is 19px */
+        }
+
+        .get-started-section .offer-details div h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 23px; /* Ensure h3 is 23px */
+        }
+
+        .get-started-section .offer-details div p {
+            margin-bottom: 15px;
+        }
+
+        .get-started-section .button-container {
+            text-align: left; /* Left align the button container */
+            margin-top: 20px;
+            padding-left: 0;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 15px 30px; /* Adjust button padding for size */
+            background-color: rgba(0, 0, 46, 0.9); /* Solid dark blue from overlay */
+            color: white;
+            text-decoration: none;
+            border-radius: 50px; /* Make the button more circular */
+            font-weight: bold; /* Make the text bold */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+            border: none; /* Remove any default button borders */
+            font-size: 19px;
+        }
+
+        .button-link:hover {
+            background-color: #001f3f; /* Darker shade on hover */
+        }
+
+        /* Style for the email link */
+        .email-link {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .email-link:hover {
+            color: #ddd; /* Slightly lighter on hover */
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: rgba(0, 0, 46, 0.75); /*  background */
+            color: #ffffff; /* Dark gray text */
+            padding: 20px 200px; /* Add padding similar to other sections */
+            text-align: center;
+            font-size: 14px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="base-background"></div>
+
+    
+    <div class="content-overlay">
+        
+
+        <div class="intro-products-container">
+            <div class="logo">
+               <img src="susrotoi logo.png" alt="Susrotoi Logo">
+            </div>
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h1>Welcome to Susrotoi - Your Printing Solution in Ghana!</h1>
+                    <p>Discover high-quality toner cartridges and ink refills for HP and Canon printers. Serving Accra and beyond with fast delivery and unbeatable prices. Your ultimate partner for affordable, reliable printing supplies.</p>
+                </div>
+                <div class="welcome-image">
+                    <img src="IMAGE_1(HP-206A-Pack).jpg" alt="HP LaserJet Toner Cartridges">
+                </div>
+            </div>
+
+            <div class="hp-canon-section">
+                <div class="hp-canon-image">
+                    <img src="IMAGE_2.jpg" alt="Shelves of Cartridges">
+                </div>
+                <div class="hp-canon-text-and-boxes">
+                    <h2>HP & Canon Cartridges and Refills</h2>
+                    <div class="boxes-container">
+                        <div class="box outline-yellow">
+                            <h3>Wide Selection</h3>
+                            <p>Choose from a broad range of HP and Canon toner cartridges compatible with multiple printer models.</p>
+                        </div>
+                        <div class="box outline-red">
+                            <h3>Premium Ink Refills</h3>
+                            <p>Get vibrant, crisp prints with ink refills that last 20% longer than generic alternatives.</p>
+                        </div>
+                        <div class="box outline-orange">
+                            <h3>Great Savings</h3>
+                            <p>Save up to 70% compared to buying new cartridges, keeping your printing budget in check.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="why-choose-us-section">
+            <div class="why-choose-us-text">
+                <h2>Why Choose Us?</h2>
+                <div class="why-choose-us-point">
+                    <h3><span class="icon-circle outline-yellow">
+                                <img src="worker.png" alt="Local Expertise" style="width: 20px; height: 20px;">
+                            </span>
+                            Local Expertise
+                    </h3>
+                    <p>Locally owned and operated in Ghana, we understand your printing needs.</p>
+                </div>
+                <div class="why-choose-us-point">
+                    <h3>
+                        <span class="icon-circle outline-red">
+                            <img src="star.png" alt="Top-Rated Service" style="width: 20px; height: 20px;">
+                        </span>
+                        Top-Rated Service
+                    </h3>
+                    <p>5-star reviews with 98% customer satisfaction guarantee.</p>
+                </div>
+                <div class="why-choose-us-point">
+                    <h3>
+                        <span class="icon-circle outline-orange">
+                            <img src="chat.png" alt="Free Consultation" style="width: 20px; height: 20px;">
+                        </span>
+                        Free Consultation
+                    </h3>
+                    <p>Helping you find the perfect product for your printer.</p>
+                </div>
+                <div class="why-choose-us-point">
+                    <h3>
+                        <span class="icon-circle outline-orange">
+                            <img src="best-seller.png" alt="One-Year Guarantee" style="width: 20px; height: 20px;">
+                        </span>
+                        One-Year Guarantee
+                    </h3>
+                    <p>Your satisfaction is backed by our full one-year guarantee.</p>
+                </div>
+            </div>
+            <div class="why-choose-us-image">
+                <img src="IMAGE_3.jpg" alt="More Shelves of Cartridges">
+            </div>
+        </div>
+
+        <div class="delivery-across-ghana-section">
+            <div class="delivery-overlay">
+                <h2 class="section-heading">Fast, Reliable Delivery Across Ghana</h2>
+                <div class="delivery-points-container">
+                    <div class="delivery-point point-one">
+                        <div class="colored-bar outline-yellow"></div>
+                        <h3>Same-Day Delivery</h3>
+                        <p>Orders before 12 PM in Accra delivered the same day for your convenience.</p>
+                    </div>
+                    <div class="delivery-point point-two">
+                        <div class="colored-bar outline-red"></div>
+                        <h3>Free Shipping</h3>
+                        <p>Enjoy free delivery on orders over GHC 500 to anywhere in Ghana.</p>
+                    </div>
+                    <div class="delivery-point point-three">
+                        <div class="colored-bar outline-orange"></div>
+                        <h3>Secure Payments</h3>
+                        <p>Flexible payment options including secure online payments and trusted mobile money services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="get-started-section">
+            <h2>Get Started Today!</h2>
+            <div class="offer-details">
+                <div>
+                    <h3>Contact Us for a Quote</h3>
+                    <p>Reach us anytime at <a href="tel:+233506140858">+233506140858</a> or <a href="tel:+233542341978">+233542341978</a> for a free quote.</p>
+                    <p>Email us at <a href="mailto:sales.tradehouse@susrotoi.store" class="email-link">sales.tradehouse@susrotoi.store</a></p>
+                </div>
+                <div>
+                    <h3>Special Offer</h3>
+                    <p>Get 10% off your first order when you subscribe to our newsletter.</p>
+                </div>
+                <div>
+                    <h3>Subscribe</h3>
+                    <p>To subscribe to our newsletter, please select the button below:</p>
+                    <div class="button-container">
+                        <a href="https://forms.gle/qjjQw2a5GbG7fwzf7" class="button-link">Click here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2025 Susrotoi. All rights reserved.
+    </footer>
+
+</body>
+</html>
